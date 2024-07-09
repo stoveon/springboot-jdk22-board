@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 30초마다 설정 파일의 변경을 확인 하여 변경시 갱신 -->
+<configuration scan="true" scanPeriod="30 seconds">
+    <!-- 로그 레벨
+    	1) ERROR : 오류 메시지 표시
+        2) WARN  : 경고성 메시지 표시
+        3) INFO  : 정보성 메시지 표시
+        4) DEBUG : debugging 하기 위한 메시지 표시
+        5) TRACE : debug 보다 훨씬 상세한 메시지 표시 -->
+    <property name="LOG_LEVEL" value="INFO"/>
+
+    <!-- 로그 파일이 저장될 경로 -->
+    <property name="LOG_HOME" value="${user.home}/logs/board"/>
+
+    <!-- 로그 파일 이름 -->
+    <property name="LOG_PATH_NAME_WEB" value="${LOG_HOME}/web"/>
+    <property name="LOG_PATH_NAME_ETC" value="${LOG_HOME}/etc"/>
+
+    <property name="MAX_FILE_SIZE" value="10MB"/> <!-- 파일당 최고 용량 kb, mb, gb -->
+    <property name="TOTAL_SIZE" value="30MB"/>
+    <property name="MAX_HISTORY" value="20"/>
+
+    <!-- 로그 출력 패턴 -->
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} |%highlight([%-5level]) %magenta([%thread]) %logger{5}:%line - %msg%n%throwable{6}"/>
+
+
+    <!-- file에 로그 출력 세팅 -->
+    <appender name="WEB_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 파일 경로 설정 -->
+        <file>${LOG_PATH_NAME_WEB}</file>
+
+        <!-- 출력패턴 설정-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <!-- Rolling 정책 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- .gz,.zip 등을 넣으면 자동 일자별 로그파일 압축 -->
+            <fileNamePattern>${LOG_PATH_NAME_WEB}.%d{yyyyMMdd}.log</fileNamePattern>
+            <!-- 설정한 최대 파일 사이즈 도달할 때마다 파일 분리 -->
+            <!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+            <!--                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>-->
+            <!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+            <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ETC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 파일 경로 설정 -->
+        <file>${LOG_PATH_NAME_ETC}</file>
+
+        <!-- 출력패턴 설정-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <!-- Rolling 정책 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- .gz,.zip 등을 넣으면 자동 일자별 로그파일 압축 -->
+            <fileNamePattern>${LOG_PATH_NAME_ETC}.%d{yyyyMMdd}.log</fileNamePattern>
+            <!-- 설정한 최대 파일 사이즈 도달할 때마다 파일 분리 -->
+            <!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+            <!--                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>-->
+            <!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+            <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Console appender 설정 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${LOG_LEVEL}</level>
+        </filter>
+        <encoder>
+            <Pattern>${LOG_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.board" level="${LOG_LEVEL}" additive="false">
+        <appender-ref ref="ETC_FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="WEB_LOGGER" level="${LOG_LEVEL}" additive="false">
+        <appender-ref ref="WEB_FILE"/>
+    </logger>
+    <logger name="ETC_LOGGER" level="${LOG_LEVEL}" additive="false">
+        <appender-ref ref="ETC_FILE"/>
+    </logger>
+
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
