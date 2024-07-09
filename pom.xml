@@ -8,25 +8,12 @@
 		<version>3.3.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sample</groupId>
-	<artifactId>sample</artifactId>
+	<groupId>com.board</groupId>
+	<artifactId>board</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>sample</name>
-	<description>sample</description>
-<!--	<url/>-->
-<!--	<licenses>-->
-<!--		<license/>-->
-<!--	</licenses>-->
-<!--	<developers>-->
-<!--		<developer/>-->
-<!--	</developers>-->
-<!--	<scm>-->
-<!--		<connection/>-->
-<!--		<developerConnection/>-->
-<!--		<tag/>-->
-<!--		<url/>-->
-<!--	</scm>-->
+	<name>board</name>
+	<description>board</description>
 	<properties>
 		<java.version>22</java.version>
 	</properties>
