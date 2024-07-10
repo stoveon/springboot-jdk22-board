@@ -16,7 +16,7 @@
     <property name="LOG_PATH_NAME_WEB" value="${LOG_HOME}/web"/>
     <property name="LOG_PATH_NAME_ETC" value="${LOG_HOME}/etc"/>
 
-    <property name="MAX_FILE_SIZE" value="10MB"/> <!-- 파일당 최고 용량 kb, mb, gb -->
+    <property name="MAX_FILE_SIZE" value="50MB"/> <!-- 파일당 최고 용량 KB, MB, GB -->
     <property name="TOTAL_SIZE" value="30MB"/>
     <property name="MAX_HISTORY" value="20"/>
 
@@ -36,13 +36,11 @@
         </encoder>
 
         <!-- Rolling 정책 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- .gz,.zip 등을 넣으면 자동 일자별 로그파일 압축 -->
-            <fileNamePattern>${LOG_PATH_NAME_WEB}.%d{yyyyMMdd}.log</fileNamePattern>
-            <!-- 설정한 최대 파일 사이즈 도달할 때마다 파일 분리 -->
-            <!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
-            <!--                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>-->
-            <!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+            <fileNamePattern>${LOG_PATH_NAME_WEB}.%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <!-- 설정한 최대 파일 사이즈 도달할 때마다 파일 분리 KB, MB, GB -->
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
             <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
             <maxHistory>${MAX_HISTORY}</maxHistory>
         </rollingPolicy>
@@ -58,13 +56,11 @@
         </encoder>
 
         <!-- Rolling 정책 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- .gz,.zip 등을 넣으면 자동 일자별 로그파일 압축 -->
-            <fileNamePattern>${LOG_PATH_NAME_ETC}.%d{yyyyMMdd}.log</fileNamePattern>
-            <!-- 설정한 최대 파일 사이즈 도달할 때마다 파일 분리 -->
-            <!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
-            <!--                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>-->
-            <!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+            <fileNamePattern>${LOG_PATH_NAME_ETC}.%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <!-- 설정한 최대 파일 사이즈 도달할 때마다 파일 분리 KB, MB, GB -->
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
             <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
             <maxHistory>${MAX_HISTORY}</maxHistory>
         </rollingPolicy>
