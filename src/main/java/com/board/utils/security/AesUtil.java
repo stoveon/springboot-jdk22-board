@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Slf4j
-public class AesUtils {
+public class AesUtil {
 
     private static final Gson GSON = new Gson();
 
